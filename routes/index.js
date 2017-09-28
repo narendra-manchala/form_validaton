@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-//var Response = require('../common/response');
+var Response = require('../common/response');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test', { useMongoClient: true, promiseLibrary: global.Promise });
@@ -39,8 +39,9 @@ router.get('/welcome', function(req, res){
             res.redirect('/');
         }else{
             req.session.user = user;
-            Response.successResponse('User loggedin successfully!',res,user);
-            //res.render('welcome');
+            console.log(req.session.user);
+            //Response.successResponse('User loggedin successfully!',res,user);
+            res.render('welcome');
         }
     });
 
@@ -58,10 +59,16 @@ router.get('/dashboard', function(req, res) {
     if(!req.session.user){
         Response.unauthorizedRequest('You are not logged in',res);
     }else{
-        Response.successResponse('Welcome to dashboard!',res,req.session.user);
+        Response.successResponse('Welcome to dashboard!');
     }
 
 });
 
+router.get('/logout', function (req, res) {
+
+    req.session.destroy();
+    console.log(req.session.user);
+    res.send("logout success!");
+});
 
 module.exports = router;
