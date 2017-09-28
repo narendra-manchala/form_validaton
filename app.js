@@ -10,6 +10,16 @@ var users = require('./routes/users');
 
 var app = express();
 
+
+
+var session = require('express-session');
+
+app.use(session({
+    secret: 'thisisasecretkey', // a secret key you can write your own
+    resave: false,
+    saveUninitialized: true
+}));
+
 //ejs setup
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
