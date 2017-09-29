@@ -10,14 +10,21 @@ var users = require('./routes/users');
 
 var app = express();
 
-
-
 var session = require('express-session');
+
+var MongoDBStore = require('connect-mongodb-session')(session);
+
+var store = new MongoDBStore(
+    {
+        uri: 'mongodb://localhost:27017/connect_mongodb_session_test',
+        collection: 'mySessions'
+    });
 
 app.use(session({
     secret: 'thisisasecretkey', // a secret key you can write your own
+    store: store,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
 }));
 
 //ejs setup

@@ -39,8 +39,9 @@ router.get('/welcome', function(req, res){
             res.redirect('/');
         }else{
             req.session.user = user;
-            console.log(req.session.user);
-            //Response.successResponse('User loggedin successfully!',res,user);
+            // req.session.save(function(err) {
+            //     // session saved
+            // })
             res.render('welcome');
         }
     });
@@ -67,7 +68,7 @@ router.get('/dashboard', function(req, res) {
 router.get('/logout', function (req, res) {
 
     req.session.destroy();
-    console.log(req.session.user);
+    //console.log(req.session.user);
     res.send("logout success!");
 });
 
